@@ -1,0 +1,53 @@
+<div class="title-bar">
+    <div class="title">
+      <h1>Breizh Cocktails</h1>
+    </div>
+    <div class="button-create">
+      <%= link_to 'new cocktail', new_cocktail_path %>
+    </div>
+</div>
+<div class="container">
+  <div class="row">
+    <%= simple_form_for [@cocktail] do |f| %>
+    <%= f.input :name %>
+    <%=f.simple_fields_for :dose do |dose_form| %>
+      <%= dose_form.input :description %>
+      <%= dose_form.input :ingredient_id, collection: @ingredients, label_method: :name, value_method: :id %>
+      <%# dose_form.association :ingredient%>
+    <% end %>
+  <%= f.submit name: 'new-cocktail', class: "btn btn-primary" %>
+<% end %>
+  </div>
+      <div class="row">
+          <% @cocktails.each do |cocktail| %>
+            <div class="col-xs-12 col-sm-4">
+              <div class="cocktail-card card js-card">
+                <div class="card__wrapper">
+                  <div class="cocktail-card-name">
+                    <%= link_to cocktail.name, cocktail_path(cocktail) %>
+                  </div>
+                  <div class="cocktail-card-ingredients card__side is-active">
+                    <ul class="list-group">
+                      <% cocktail.doses.each do |dose| %>
+                        <li><%=  dose.ingredient.name %> / <%= dose.description %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                  <div class="new-ingredients card__side card__side--back">
+                    <p>essai</p>
+                  </div>
+                </div>
+              </div>
+              <div class="add-ingredient">
+                <button id="btn"><%= link_to 'Add ingredient', new_cocktail_dose_path(cocktail) %></button>
+              </div>
+            </div>
+          <% end  %>
+      </div>
+
+
+
+
+
+</div>
+

@@ -1,0 +1,11 @@
+<h1>New Cocktail</h1>
+
+<%= simple_form_for [@cocktail] do |f| %>
+  <%= f.input :name %>
+    <%=f.simple_fields_for :dose do |dose_form| %>
+      <%= dose_form.input :description %>
+      <%= dose_form.input :ingredient_id, collection: @ingredients, label_method: :name, value_method: :id %>
+      <%# dose_form.association :ingredient%>
+    <% end %>
+  <%= f.submit name: 'new-cocktail', class: "btn btn-primary" %>
+<% end %>
